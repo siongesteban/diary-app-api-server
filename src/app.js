@@ -5,6 +5,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
+import configureRouter from './routes';
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -28,5 +30,7 @@ app.options('*', configuredCors);
 
 app.use(helmet());
 app.use(morgan('combined'));
+
+configureRouter(app);
 
 export default app;
