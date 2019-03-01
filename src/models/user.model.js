@@ -33,7 +33,7 @@ const userSchema = new Schema(
   },
 );
 
-async function hashPassword(next) {
+userSchema.pre('save', async function hashPassword(next) {
   const user = this;
 
   if (this.isModified('password') || this.isNew) {
@@ -41,9 +41,11 @@ async function hashPassword(next) {
   }
 
   next();
-}
+});
 
-userSchema.pre('save', hashPassword);
+userSchema.methods.comparePassword = function comparePassword(password) {
+  return bcrypt.compare(password, this.password);
+};
 
 userSchema.plugin(uniqueValidator);
 
