@@ -6,5 +6,5 @@ import { logger } from './lib';
 const { PORT } = process.env;
 
 app.listen(PORT, () => {
-  logger.info(`App is now running on port ${PORT}.`);
+  logger.info(`Now running on port ${PORT}.`);
 });

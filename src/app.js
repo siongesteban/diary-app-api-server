@@ -4,13 +4,23 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 
+import { logger } from './lib';
 import configureRouter from './routes';
 
-const app = express();
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
-app.use(bodyParser.json());
-app.use(compression());
+const db = mongoose.connection;
+
+db.on('error', () => {
+  logger.error('Failed to connect to the database.');
+});
+db.once('open', () => {
+  logger.info('Successfully connected to the database.');
+});
+
+const app = express();
 
 const whitelist = ['localhost'];
 const corsOptions = {
@@ -22,14 +32,14 @@ const corsOptions = {
     }
   },
 };
-
 const configuredCors = cors(corsOptions);
 
+app.use(bodyParser.json());
+app.use(compression());
 app.use(configuredCors);
-app.options('*', configuredCors);
-
 app.use(helmet());
 app.use(morgan('combined'));
+app.options('*', configuredCors);
 
 configureRouter(app);
 
