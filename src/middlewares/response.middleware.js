@@ -1,6 +1,10 @@
 import map from 'lodash/map';
 
-import { VALIDATION_ERROR, INTERNAL_SERVER_ERROR } from '../constants';
+import {
+  CAST_ERROR,
+  INTERNAL_SERVER_ERROR,
+  VALIDATION_ERROR,
+} from '../constants';
 
 const dataResponse = (_, res) => {
   const status = 200;
@@ -12,7 +16,7 @@ const dataResponse = (_, res) => {
 };
 
 const errorResponse = (req, res) => {
-  const { entity, error } = res.locals;
+  const { model, error } = res.locals;
   let errors;
   let errorMessage;
   let errorName;
@@ -20,17 +24,32 @@ const errorResponse = (req, res) => {
 
   if (error.name === VALIDATION_ERROR) {
     status = 400;
-    errorMessage = `${entity} already exists`;
+    errorMessage = `${model} validation failed.`;
     errorName = error.name;
 
     errors = map(error.errors, errorField => {
       const {
-        properties: { path: field, type, value },
+        name,
+        properties: {
+          type,
+          value,
+          path: field,
+          message: defaultMessage,
+        } = {},
       } = errorField;
       let message;
 
+      if (name === CAST_ERROR) {
+        return {
+          field: errorField.path,
+          message: 'The value provided has an invalid type.',
+        };
+      }
+
       if (type === 'unique') {
         message = `${value} is already in use.`;
+      } else {
+        message = defaultMessage;
       }
 
       return {
