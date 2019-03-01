@@ -1,5 +1,11 @@
 import { Entry } from '../models';
-import { findDocs, getDoc, createDoc, patchDoc, deleteDoc } from '../lib';
+import {
+  findDocs,
+  getDoc,
+  createDoc,
+  patchDoc,
+  deleteDoc,
+} from '../lib';
 
 export const findEntries = async params => {
   const data = await findDocs(Entry, { author: params.user._id });

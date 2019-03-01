@@ -3,8 +3,8 @@ import { NotFoundError } from './error.lib';
 
 export const findDocs = (Model, params) => Model.find(params);
 
-export const getDoc = async (Model, id) => {
-  const doc = await Model.findById(id);
+export const getDoc = async (Model, id, params) => {
+  const doc = await Model.findOne({ _id: id }, params);
   const { constructor: { modelName } } = new Model({});
 
   if (!doc) {
