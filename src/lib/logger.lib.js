@@ -4,14 +4,6 @@ const logger = createLogger({
   level: 'info',
   format: format.json(),
   defaultMeta: { service: 'diary-app-api' },
-  transports: [
-    //
-    // - Write to all logs with level `info` and below to `combined.log`
-    // - Write all logs error (and below) to `error.log`.
-    //
-    new transports.File({ filename: 'error.log', level: 'error' }),
-    new transports.File({ filename: 'combined.log' }),
-  ],
 });
 
 //
