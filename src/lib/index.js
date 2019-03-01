@@ -1,4 +1,5 @@
 import logger from './logger.lib';
 
+export * from './crud.lib';
 export * from './error.lib';
 export { logger };
