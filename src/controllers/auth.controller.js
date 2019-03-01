@@ -1,21 +1,18 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import { User } from '../models';
 
-const createUserToken = data => jwt.sign(data);
+const createUserToken = data => jwt.sign(data, process.env.APP_SECRET);
 
 export const signUp = async payload => {
   const { name, username, password } = payload;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   const newUser = new User({
     name,
     username,
+    password,
     id: new mongoose.Types.ObjectId(),
-    password: hashedPassword,
   });
 
   const user = await newUser.save();

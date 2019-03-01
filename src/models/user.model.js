@@ -1,13 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import bcrypt from 'bcryptjs';
 import { getMinMessage, getMaxMessage, getRequiredMessage } from '../utils';
 
 const userSchema = new Schema(
   {
-    id: {
-      type: Schema.Types.ObjectId,
-      required: true,
-    },
     name: {
       type: String,
       maxlength: [50, getMaxMessage('Name', 50)],
@@ -35,6 +32,18 @@ const userSchema = new Schema(
     timestamps: true,
   },
 );
+
+async function hashPassword(next) {
+  const user = this;
+
+  if (this.isModified('password') || this.isNew) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+
+  next();
+}
+
+userSchema.pre('save', hashPassword);
 
 userSchema.plugin(uniqueValidator);
 
