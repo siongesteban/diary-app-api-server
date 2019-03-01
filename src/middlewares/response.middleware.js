@@ -1,6 +1,6 @@
 import map from 'lodash/map';
 
-import { VALIDATION_ERROR } from '../constants';
+import { VALIDATION_ERROR, INTERNAL_SERVER_ERROR } from '../constants';
 
 const dataResponse = (_, res) => {
   const status = 200;
@@ -15,12 +15,13 @@ const errorResponse = (req, res) => {
   const { entity, error } = res.locals;
   let errors;
   let errorMessage;
+  let errorName;
   let status;
 
   if (error.name === VALIDATION_ERROR) {
     status = 400;
-
     errorMessage = `${entity} already exists`;
+    errorName = error.name;
 
     errors = map(error.errors, errorField => {
       const {
@@ -37,13 +38,17 @@ const errorResponse = (req, res) => {
         message,
       };
     });
+  } else {
+    status = 500;
+    errorMessage = error.message;
+    errorName = INTERNAL_SERVER_ERROR;
   }
 
   const result = {
-    errors,
     status,
-    name: error.name,
+    name: errorName,
     message: errorMessage,
+    ...(errors && { errors }),
     ...(req.query.getRaw && { raw: error }),
   };
 
