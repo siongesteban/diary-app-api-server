@@ -7,9 +7,13 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 
 import { logger } from './lib';
+import { queryParser } from './middlewares';
 import configureRouter from './routes';
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+});
 
 const db = mongoose.connection;
 
@@ -39,6 +43,7 @@ app.use(compression());
 app.use(configuredCors);
 app.use(helmet());
 app.use(morgan('combined'));
+app.use(queryParser);
 app.options('*', configuredCors);
 
 configureRouter(app);
