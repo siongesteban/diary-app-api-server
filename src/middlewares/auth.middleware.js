@@ -31,6 +31,8 @@ export default async (req, res, next) => {
         reason: 'User does not exist.',
       });
     }
+
+    req.user = { _id: user._id };
   } catch (e) {
     res.locals.modelName = 'User';
     res.locals.error = e;

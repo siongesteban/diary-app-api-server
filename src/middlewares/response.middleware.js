@@ -33,7 +33,6 @@ export const errorResponse = (req, res) => {
         name,
         properties: {
           type,
-          value,
           path: field,
           message: defaultMessage,
         } = {},
@@ -48,7 +47,7 @@ export const errorResponse = (req, res) => {
       }
 
       if (type === 'unique') {
-        message = `${value} is already in use.`;
+        message = 'Already in use.';
       } else {
         message = defaultMessage;
       }
