@@ -1,0 +1,8 @@
+{"message":"App is now running on port 8081.","level":"info","service":"user-service"}
+{"message":"App is now running on port 8081.","level":"info","service":"diary-app-api"}
+{"message":"App is now running on port 8081.","level":"error","service":"diary-app-api"}
+{"message":"App is now running on port 8081.","level":"error","service":"diary-app-api"}
+{"message":"App is now running on port 8081.","level":"error","service":"diary-app-api"}
+2019-03-01T01:36:26.789Z [right meow!] error: App is now running on port 8081.
+undefined [undefined] error: App is now running on port 8081.
+{"message":"App is now running on port 8081.","level":"error","service":"diary-app-api"}
