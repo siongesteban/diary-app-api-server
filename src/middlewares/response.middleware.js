@@ -11,13 +11,14 @@ const dataResponse = (_, res) => {
   });
 };
 
-const errorResponse = (req, res) => {
+export const errorResponse = (req, res) => {
   const { modelName, error } = res.locals;
+  const { data: errorData } = error;
   let {
     field: errorField,
     message: errorMessage,
     name: errorName,
-    statusCode,
+    statusCode = 500,
   } = error;
   let errors;
 
@@ -64,6 +65,7 @@ const errorResponse = (req, res) => {
     error: {
       name: errorName,
       message: errorMessage,
+      ...(errorData && { data: errorData }),
       ...(errorField && { field: errorField }),
       ...(errors && { errors }),
       ...(req.query.getRaw && { raw: error }),

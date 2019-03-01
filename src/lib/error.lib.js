@@ -9,9 +9,10 @@ class DomainError extends Error {
 }
 
 export class AuthenticationError extends DomainError {
-  constructor(message, field) {
-    super(message);
+  constructor(message, field, data) {
+    super(message || 'Authentication failed.');
 
+    this.data = data;
     this.field = field;
     this.statusCode = 401;
   }
