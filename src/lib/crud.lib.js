@@ -1,5 +1,7 @@
 import forEach from 'lodash/forEach';
 
+export const findDocs = (Model, params) => Model.find(params);
+
 export const createDoc = (Model, data) => Model.create(data);
 
 export const patchDoc = (Model, id, data) => {

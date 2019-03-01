@@ -1,5 +1,11 @@
 import { Entry } from '../models';
-import { createDoc, patchDoc, deleteDoc } from '../lib';
+import { findDocs, createDoc, patchDoc, deleteDoc } from '../lib';
+
+export const findEntries = async params => {
+  const data = await findDocs(Entry, { author: params.user._id });
+
+  return data;
+};
 
 export const createEntry = async (payload, params) => {
   const { title, content, type } = payload;
