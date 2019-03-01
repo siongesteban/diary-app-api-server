@@ -1,7 +1,8 @@
 import forEach from 'lodash/forEach';
 
-export const create = (Model, data) => Model.create(data);
-export const patch = (Model, id, data) => {
+export const createDoc = (Model, data) => Model.create(data);
+
+export const patchDoc = (Model, id, data) => {
   const fieldsToPath = {};
 
   forEach(data, (value, field) => {
@@ -10,9 +11,7 @@ export const patch = (Model, id, data) => {
     }
   });
 
-  const condition = { _id: id };
-  const dataPatch = { $set: fieldsToPath };
-  const options = { new: true };
-
-  return Model.findOneAndUpdate(condition, dataPatch, options);
+  return Model.findByIdAndUpdate(id, { $set: fieldsToPath }, { new: true });
 };
+
+export const deleteDoc = (Model, id) => Model.findByIdAndDelete(id);
