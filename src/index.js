@@ -1,3 +1,9 @@
-const greet = name => `Hello there, ${name}!`;
+import 'dotenv/config';
 
-console.log(greet('Siong'));
+import app from './app';
+
+const { PORT } = process.env;
+
+app.listen(PORT, () => {
+  console.log(`App is now running on port ${PORT}.`);
+});
