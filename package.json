@@ -1,0 +1,28 @@
+{
+  "name": "diary-app-api-server",
+  "version": "1.0.0",
+  "description": "A simple REST API server made with Express, for a simple diary app (React).",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siongesteban/diary-app-api-server"
+  },
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist"
+  },
+  "author": "Siong Esteban <siong.esteban@gmail.com> (http://siongesteban.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.10"
+  }
+}
