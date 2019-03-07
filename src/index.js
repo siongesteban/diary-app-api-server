@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import app from './app';
-import { logger } from './lib';
+import { logger } from './libs';
 
 const { PORT } = process.env;
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { User } from '../models';
-import { AuthenticationError, NotFoundError } from '../lib';
+import { AuthenticationError, NotFoundError } from '../libs';
 
 const createUserToken = data => jwt.sign(data, process.env.APP_SECRET);
 

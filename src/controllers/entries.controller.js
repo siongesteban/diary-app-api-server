@@ -5,7 +5,7 @@ import {
   createDoc,
   patchDoc,
   deleteDoc,
-} from '../lib';
+} from '../libs';
 
 export const findEntries = async params => {
   const data = await findDocs(Entry, { author: params.user._id });

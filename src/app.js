@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 
-import { logger } from './lib';
+import { logger } from './libs';
 import { queryParser } from './middlewares';
 import configureRouter from './routes';
 

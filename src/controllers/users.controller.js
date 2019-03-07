@@ -3,7 +3,7 @@ import {
   getDoc,
   patchDoc,
   deleteDoc,
-} from '../lib';
+} from '../libs';
 
 export const getUser = async params => {
   const data = await getDoc(User, params.id, { password: 0 });

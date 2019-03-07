@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { User } from '../models';
-import { AuthenticationError } from '../lib';
+import { AuthenticationError } from '../libs';
 import { errorResponse } from './response.middleware';
 
 export default async (req, res, next) => {
