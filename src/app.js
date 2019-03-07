@@ -39,7 +39,7 @@ const corsOptions = {
 };
 const configuredCors = cors(corsOptions);
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '16mb', extended: true }));
 app.use(compression());
 app.use(configuredCors);
 app.use(helmet());
