@@ -27,7 +27,7 @@ db.once('open', () => {
 
 const app = express();
 
-const whitelist = ['localhost'];
+const whitelist = ['http://192.168.1.4:3000'];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
