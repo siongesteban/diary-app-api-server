@@ -18,6 +18,12 @@ const entrySchema = new Schema(
     type: {
       type: String,
       enum: ['academic', 'fitness', 'health', 'religious', 'travel', 'work'],
+      required: [true, getRequiredMessage('Entry Type')],
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: [true, getRequiredMessage('Category')],
     },
     author: {
       type: Schema.Types.ObjectId,
