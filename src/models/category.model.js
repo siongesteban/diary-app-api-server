@@ -13,10 +13,12 @@ const categorySchema = new Schema(
     },
     description: {
       type: String,
-      maxlength: [50, getMaxMessage('Description', 50)],
+      maxlength: [200, getMaxMessage('Description', 200)],
       minlength: [30, getMinMessage('Description', 30)],
       required: [true, getRequiredMessage('Description')],
     },
+    coverBase64: String,
+    coverUrl: String,
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
