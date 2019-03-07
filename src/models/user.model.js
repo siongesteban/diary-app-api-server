@@ -10,6 +10,7 @@ const userSchema = new Schema(
       maxlength: [50, getMaxMessage('Name', 50)],
       minlength: [3, getMinMessage('Name', 3)],
       required: [true, getRequiredMessage('Name')],
+      unique: true,
     },
     username: {
       type: String,
