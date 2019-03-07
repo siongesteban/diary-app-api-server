@@ -6,28 +6,28 @@ import { AuthenticationError, NotFoundError } from '../lib';
 const createUserToken = data => jwt.sign(data, process.env.APP_SECRET);
 
 export const logIn = async payload => {
-  const { username, password } = payload;
-
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username: payload.username });
 
   if (!user) {
     throw new NotFoundError('User', 'username');
   }
 
-  const passwordMatched = await user.comparePassword(password);
+  const passwordMatched = await user.comparePassword(payload.password);
 
   if (!passwordMatched) {
     throw new AuthenticationError('Invalid password.', 'password');
   }
 
-  const token = createUserToken({ userId: user._id });
+  const { _id, name, username } = user;
+
+  const token = createUserToken({ _id, name, username });
 
   const data = {
     token,
     user: {
-      _id: user._id,
-      name: user.name,
-      username: user.username,
+      _id,
+      name,
+      username,
     },
   };
 
@@ -44,7 +44,11 @@ export const signUp = async payload => {
   });
 
   const user = await newUser.save();
-  const token = createUserToken({ userId: user._id });
+  const token = createUserToken({
+    _id: user._id,
+    name,
+    username,
+  });
 
   const data = {
     token,

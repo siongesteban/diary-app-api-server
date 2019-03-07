@@ -16,7 +16,7 @@ export default async (req, res, next) => {
 
     const token = authorization.replace('Bearer ', '');
 
-    const { userId } = jwt.verify(token, process.env.APP_SECRET);
+    const { _id: userId } = jwt.verify(token, process.env.APP_SECRET);
 
     if (!userId) {
       throw new AuthenticationError(null, null, {
