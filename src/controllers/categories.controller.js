@@ -1,5 +1,6 @@
 import { Category, User } from '../models';
 import {
+  imgur,
   findDocs,
   getDoc,
   createDoc,
@@ -8,7 +9,7 @@ import {
 } from '../libs';
 
 export const findCategories = async params => {
-  const diaryApp = await User.findOne({ name: 'YourDaily' });
+  const diaryApp = (await User.findOne({ name: 'YourDaily' })) || {};
   const query = {
     $or: [
       {
@@ -32,18 +33,23 @@ export const getCategory = async params => {
 };
 
 export const createCategory = async (payload, params) => {
-  const {
-    coverBase64,
-    coverUrl,
+  const { coverBase64, name, description } = payload;
+
+  const base64 = coverBase64.split(',')[1];
+  const imgurResult = await imgur.uploadBase64(
+    base64,
+    process.env.IMGUR_ALBUM_ID,
     name,
     description,
-  } = payload;
+  );
+  const {
+    data: { link: imgurLink },
+  } = imgurResult;
 
   const data = await createDoc(Category, {
     name,
     description,
-    coverBase64,
-    coverUrl,
+    coverUrl: imgurLink,
     createdBy: params.user._id,
   });
 
@@ -51,12 +57,7 @@ export const createCategory = async (payload, params) => {
 };
 
 export const patchCategory = async (payload, id) => {
-  const {
-    coverBase64,
-    coverUrl,
-    name,
-    description,
-  } = payload;
+  const { coverBase64, coverUrl, name, description } = payload;
 
   const data = await patchDoc(Category, id, {
     name,
