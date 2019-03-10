@@ -17,17 +17,17 @@ export const getDoc = async (Model, id, params) => {
 export const createDoc = (Model, data) => Model.create(data);
 
 export const patchDoc = async (Model, id, data) => {
-  const fieldsToPath = {};
+  const fieldsToPatch = {};
 
   forEach(data, (value, field) => {
     if (value) {
-      fieldsToPath[field] = value;
+      fieldsToPatch[field] = value;
     }
   });
 
   await getDoc(Model, id);
 
-  return Model.findByIdAndUpdate(id, { $set: fieldsToPath }, { new: true });
+  return Model.findByIdAndUpdate(id, { $set: fieldsToPatch }, { new: true });
 };
 
 export const deleteDoc = async (Model, id) => {

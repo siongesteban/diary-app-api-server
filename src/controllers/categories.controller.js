@@ -57,12 +57,27 @@ export const createCategory = async (payload, params) => {
 };
 
 export const patchCategory = async (payload, id) => {
-  const { coverBase64, coverUrl, name, description } = payload;
+  const { coverBase64, name, description } = payload;
+  let coverUrl;
+
+  if (coverBase64) {
+    const base64 = coverBase64.split(',')[1];
+    const imgurResult = await imgur.uploadBase64(
+      base64,
+      process.env.IMGUR_ALBUM_ID,
+      name,
+      description,
+    );
+    const {
+      data: { link: imgurLink },
+    } = imgurResult;
+
+    coverUrl = imgurLink;
+  }
 
   const data = await patchDoc(Category, id, {
     name,
     description,
-    coverBase64,
     coverUrl,
   });
 
