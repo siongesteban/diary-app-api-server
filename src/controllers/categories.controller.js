@@ -34,22 +34,27 @@ export const getCategory = async params => {
 
 export const createCategory = async (payload, params) => {
   const { coverBase64, name, description } = payload;
+  let coverUrl;
 
-  const base64 = coverBase64.split(',')[1];
-  const imgurResult = await imgur.uploadBase64(
-    base64,
-    process.env.IMGUR_ALBUM_ID,
-    name,
-    description,
-  );
-  const {
-    data: { link: imgurLink },
-  } = imgurResult;
+  if (coverBase64) {
+    const base64 = coverBase64.split(',')[1];
+    const imgurResult = await imgur.uploadBase64(
+      base64,
+      process.env.IMGUR_ALBUM_ID,
+      name,
+      description,
+    );
+    const {
+      data: { link: imgurLink },
+    } = imgurResult;
+
+    coverUrl = imgurLink; 
+  }
 
   const data = await createDoc(Category, {
     name,
     description,
-    coverUrl: imgurLink,
+    coverUrl,
     createdBy: params.user._id,
   });
 

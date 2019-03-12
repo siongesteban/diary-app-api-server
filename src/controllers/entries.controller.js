@@ -1,5 +1,6 @@
 import { Entry } from '../models';
 import {
+  imgur,
   findDocs,
   getDoc,
   createDoc,
@@ -20,12 +21,28 @@ export const getEntry = async params => {
 };
 
 export const createEntry = async (payload, params) => {
-  const { title, content, type } = payload;
+  const { coverBase64, title, content, category } = payload;
+  let coverUrl;
+
+  if (coverBase64) {
+    const base64 = coverBase64.split(',')[1];
+    imgurResult = await imgur.uploadBase64(
+      base64,
+      process.env.IMGUR_ALBUM_ID,
+      title,
+    );
+    const {
+      data: { link: imgurLink },
+    } = imgurResult;
+
+    coverUrl = imgurLink;
+  }
 
   const data = await createDoc(Entry, {
     title,
     content,
-    type,
+    category,
+    coverUrl,
     author: params.user._id,
   });
 
@@ -33,12 +50,28 @@ export const createEntry = async (payload, params) => {
 };
 
 export const patchEntry = async (payload, id) => {
-  const { title, content, type } = payload;
+  const { coverBase64, title, content, category } = payload;
+  let coverUrl;
+
+  if (coverBase64) {
+    const base64 = coverBase64.split(',')[1];
+    const imgurResult = await imgur.uploadBase64(
+      base64,
+      process.env.IMGUR_ALBUM_ID,
+      title,
+    );
+    const {
+      data: { link: imgurLink },
+    } = imgurResult;
+
+    coverUrl = imgurLink;
+  }
 
   const data = await patchDoc(Entry, id, {
     title,
     content,
-    type,
+    category,
+    coverUrl,
   });
 
   return data;
