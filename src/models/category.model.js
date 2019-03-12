@@ -17,7 +17,6 @@ const categorySchema = new Schema(
       minlength: [30, getMinMessage('Description', 30)],
       required: [true, getRequiredMessage('Description')],
     },
-    coverBase64: String,
     coverUrl: String,
     createdBy: {
       type: Schema.Types.ObjectId,

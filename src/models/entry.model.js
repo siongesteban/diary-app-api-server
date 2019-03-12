@@ -15,11 +15,7 @@ const entrySchema = new Schema(
       type: String,
       required: [true, getRequiredMessage('Content')],
     },
-    type: {
-      type: String,
-      enum: ['academic', 'fitness', 'health', 'religious', 'travel', 'work'],
-      required: [true, getRequiredMessage('Entry Type')],
-    },
+    coverUrl: String,
     category: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
