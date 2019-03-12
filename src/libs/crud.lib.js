@@ -1,11 +1,13 @@
 import forEach from 'lodash/forEach';
+
 import { NotFoundError } from './error.lib';
+import { getModelName } from '../utils';
 
 export const findDocs = (Model, params) => Model.find(params);
 
 export const getDoc = async (Model, id, params) => {
   const doc = await Model.findOne({ _id: id }, params);
-  const { constructor: { modelName } } = new Model({});
+  const modelName = getModelName(Model);
 
   if (!doc) {
     throw new NotFoundError(modelName);
