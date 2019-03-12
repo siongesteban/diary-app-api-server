@@ -1,14 +1,20 @@
 import forEach from 'lodash/forEach';
 import isEmpty from 'lodash/isEmpty';
 
-export default (exec, populations) => {
-  if (isEmpty(populations)) {
+import { populations } from '../constants';
+import getModelName from './get-model-name.util';
+
+export default (exec, Model) => {
+  const modelName = getModelName(Model);
+  const queryPopulations = populations[modelName];
+
+  if (isEmpty(queryPopulations)) {
     return exec;
   }
 
   let newExec = exec;
 
-  forEach(populations, population => {
+  forEach(queryPopulations, population => {
     newExec = newExec.populate(population);
   });
 
