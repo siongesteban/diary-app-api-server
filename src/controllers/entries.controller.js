@@ -21,12 +21,12 @@ export const getEntry = async params => {
 };
 
 export const createEntry = async (payload, params) => {
-  const { coverBase64, title, content, category } = payload;
+  const { coverBase64, title, content, categoryId, createdAt } = payload;
   let coverUrl;
 
   if (coverBase64) {
     const base64 = coverBase64.split(',')[1];
-    imgurResult = await imgur.uploadBase64(
+    const imgurResult = await imgur.uploadBase64(
       base64,
       process.env.IMGUR_ALBUM_ID,
       title,
@@ -41,8 +41,9 @@ export const createEntry = async (payload, params) => {
   const data = await createDoc(Entry, {
     title,
     content,
-    category,
     coverUrl,
+    createdAt,
+    category: categoryId,
     author: params.user._id,
   });
 
@@ -50,7 +51,7 @@ export const createEntry = async (payload, params) => {
 };
 
 export const patchEntry = async (payload, id) => {
-  const { coverBase64, title, content, category } = payload;
+  const { coverBase64, title, content, categoryId, updatedAt } = payload;
   let coverUrl;
 
   if (coverBase64) {
@@ -70,8 +71,9 @@ export const patchEntry = async (payload, id) => {
   const data = await patchDoc(Entry, id, {
     title,
     content,
-    category,
     coverUrl,
+    updatedAt,
+    category: categoryId,
   });
 
   return data;

@@ -25,9 +25,14 @@ const entrySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-  },
-  {
-    timestamps: true,
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
 );
 
