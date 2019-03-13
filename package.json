@@ -9,9 +9,10 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src",
+    "serve": "nodemon --exec babel-node src",
     "build": "babel src --out-dir dist",
-    "serve": "node dist"
+    "start": "node dist",
+    "heroku-postbuild": "npm i && npm run build"
   },
   "author": "Siong Esteban <siong.esteban@gmail.com> (http://siongesteban.com)",
   "license": "ISC",
