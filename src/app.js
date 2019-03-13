@@ -45,7 +45,10 @@ app.use(configuredCors);
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(queryParser);
-app.options('*', configuredCors);
+app.options(
+  '*',
+  process.env.NODE_ENV === 'development' ? configuredCors : cors(),
+);
 
 configureRouter(app);
 
