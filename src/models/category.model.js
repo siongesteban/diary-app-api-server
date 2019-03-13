@@ -6,7 +6,7 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
-      maxlength: [15, getMaxMessage('Name', 15)],
+      maxlength: [30, getMaxMessage('Name', 30)],
       minlength: [3, getMinMessage('Name', 3)],
       required: [true, getRequiredMessage('Name')],
       unique: true,
