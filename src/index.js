@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import 'dotenv/config';
 
 import app from './app';
