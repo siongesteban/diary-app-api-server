@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/siongesteban/diary-app-api-server"
   },
-  "main": "./src/index.js",
+  "main": "dist",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon --exec babel-node src",
